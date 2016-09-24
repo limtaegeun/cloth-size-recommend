@@ -1,20 +1,26 @@
 from pyspark import SparkConf, SparkContext
 import pandas as pd
-from pyspark.sql import SQLContext as sqlContext
+from pyspark.sql import SQLContext
 from pyspark.sql import Row
 import copy
 import json
 
-# ************** Row models *****************************
-clothes_model = Row("key", "brand", "category", "title", "gender", "size", "material", "shoulder", "chest", "waist",
-                    "hip", "thigh", "group")
-error_model = Row('shoulder', 'chest', 'waist', 'pelvis', 'hip', 'thigh', 'arm', 'leg', 'calf')
-# *****************************************************
+# ---------------------------- Row models ------------------------------
+clothes_model = Row("index", "brand", "gender", "size", "title", "category", "size_detail")
+
+error_model_basic = Row('shoulder', 'chest', 'waist', 'pelvis', 'hip', 'thigh')
+error_model_option = Row('shoulder', 'chest', 'waist', 'pelvis', 'hip', 'thigh', 'arm', 'leg', 'calf')
+
+user_size_basic = ['shoulder', 'chest', 'waist', 'pelvis', 'hip', 'thigh']
+user_size_option = ['shoulder', 'chest', 'waist', 'pelvis', 'hip', 'thigh', 'arm', 'leg', 'calf']
+# ----------------------------------------------------------------------
+
 
 
 # set spark conf
 conf = SparkConf().setMaster("local").setAppName("classifyCloth")
 sc = SparkContext(conf = conf)
+sqlContext = SQLContext(sc)
 
 # read csv
 file_path = '/Users/stevelim/spark/siba.csv'
@@ -84,7 +90,7 @@ user_pdf = pd.read_csv('file://' + file_path, encoding='utf-8')
 user_df = sqlContext.createDataFrame(pdf)
 user_rdd = user_df.rdd
 
-
+# get error Data By Clothes
 for clothes in preprocess_rdd.collect():
 
     def get_error(user):
@@ -95,8 +101,27 @@ for clothes in preprocess_rdd.collect():
         clothes_size_list = clothes['size']
         clothes_size_count = len(clothes_size_list)
 
+        fit_size = user['top_size']  # fit_size = user['fit_size']
+        fit_clothes_index = clothes_size_list.index(fit_size)
+        fit_clothes_measure = clothes_measure_list[fit_clothes_index]
 
-        fit_size = user['']
+        # --------------matched detail measure---------------
+        '''
+        user              -   clothes
+        shoulder          -   shoulderWith * 2
+        chest             -   chestRound / chestWidth * 2
+        waist / pelvis    -   waistRound / chestWidth * 2
+        hip               -   hipRound /  hipWidth * 2
+        thigh             -   thighRound / thighWidth * 2
+        arm               -   sleeveLength
+        leg               -   legLength
+        calf              -   none
+        '''
+        # ---------------------------------------------------
+
+        error = error_model_basic
+
+
 
 
 
