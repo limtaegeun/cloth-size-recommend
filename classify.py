@@ -115,11 +115,13 @@ for clothes in preprocess_rdd.collect():
         thigh             -   thighRound / thighWidth * 2
         arm               -   sleeveLength
         leg               -   legLength
-        calf              -   none
+        calf              -   calfRound / calfWidth * 2
         '''
         # ---------------------------------------------------
 
-        error = error_model_basic
+        
+
+
 
 
 

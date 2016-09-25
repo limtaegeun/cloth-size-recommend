@@ -8,8 +8,8 @@ conf = SparkConf().setMaster("local").setAppName("classifyCloth")
 sc = SparkContext(conf = conf)
 sqlContext = SQLContext(sc)
 # read csv
-file_path = '/Users/stevelim/spark/uniqloData.csv'
-pdf = pd.read_csv('file://' + file_path, encoding='utf-8')
+file_path = 'siba1.csv'
+pdf = pd.read_csv( file_path, encoding='utf-8')
 
 df = sqlContext.createDataFrame(pdf)
 df.show()
