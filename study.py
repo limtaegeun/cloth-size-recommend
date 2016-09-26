@@ -5,6 +5,10 @@ from pyspark.sql import Row
 import copy
 import json
 
+import sqlite3
+
+
+
 # ---------------------------- Row models ------------------------------
 clothes_model = Row("index", "brand", "gender", "size", "title", "category", "shoulder", "chest", "waist", "pelivs",
                     "hip", "thigh")
@@ -124,16 +128,8 @@ def size_preprocess(rdd):
 
                 select = switch_dic.get(key)()
 
-        # check size count and all column count is same
-        size_count = len(row.size)
-
-        if shoulder.count() != size_count:
-
-
-
         result_row = clothes_model(row.index, row.brand, row.gender, row.size, row.title, row.category,shoulder,chest,
                                    waist,pelvis,hip,thigh)
-
 
         return result_row
 
@@ -143,7 +139,9 @@ def size_preprocess(rdd):
 
 
 preprocess_rdd = size_preprocess(clear_rdd)
-'''
+
+
+
 # TODO: get user's detail size by clothes
 
 file_path = ''
@@ -195,5 +193,5 @@ for clothes in preprocess_rdd.collect():
 
 
     error_rdd = user_rdd.map(get_error)
-'''
+
 
