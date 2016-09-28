@@ -175,13 +175,15 @@ integRdd = integration(reduceRdd).persist()
 helpFunc.show_rdd(integRdd, sqlContext)
 
 
-def filter_category(rdd, categorys):
+def filter_category(rdd, categorys,):
     def filter_func(row):
 
-        if row.category in categorys:
-            return True
-        else:
+        if row.category not in categorys:
             return False
+
+        if row.gender != u'male':
+            return False
+        return True
 
     return rdd.filter(filter_func)
 
