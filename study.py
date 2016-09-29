@@ -7,7 +7,7 @@ import copy
 import json
 import requests
 import helpFunc
-import preprocess
+import prepare
 import analytics
 
 
@@ -24,16 +24,16 @@ df = sqlContext.createDataFrame(pdf)
 #df.show()
 df_to_rdd = df.rdd
 
-clear_rdd = df_to_rdd.filter(preprocess.filter_error)
+clear_rdd = df_to_rdd.filter(prepare.filter_error)
 
-preprocess_rdd = preprocess.size_preprocess(clear_rdd)
+preprocess_rdd = prepare.size_preprocess(clear_rdd)
 
 helpFunc.show_rdd(preprocess_rdd, sqlContext)
 
-reduceRdd = preprocess.colorFiltering(preprocess_rdd).sortBy(lambda row : row.key)
+reduceRdd = prepare.colorFiltering(preprocess_rdd).sortBy(lambda row : row.key)
 helpFunc.show_rdd(reduceRdd, sqlContext)
 
-integRdd = preprocess.integration(reduceRdd).persist()
+integRdd = prepare.integration(reduceRdd).persist()
 
 helpFunc.show_rdd(integRdd, sqlContext)
 

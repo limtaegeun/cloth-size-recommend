@@ -1,10 +1,4 @@
-from pyspark import SparkConf, SparkContext
-import pandas as pd
-from pyspark.sql import SQLContext
 from pyspark.sql import Row
-import copy
-import json
-import requests
 import helpFunc
 
 # ---------------------------- Row models ------------------------------

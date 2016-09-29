@@ -1,4 +1,4 @@
-import preprocess
+import prepare
 
 def filter_category(rdd, categorys, sex):
     def filter_func(row):
@@ -59,7 +59,7 @@ def map_get_error(rdd, user_rdd):
                         pelvis = 0
 
                     # error_model_basic = Row('size', 'shoulder', 'chest', 'waist', 'pelvis', 'hip', 'thigh')
-                    row_list.append(preprocess.error_model_basic(row.name,row.size[size_index], shoulder, chest, waist, pelvis, hip, thigh))
+                    row_list.append(prepare.error_model_basic(row.name, row.size[size_index], shoulder, chest, waist, pelvis, hip, thigh))
 
 
         return row_list
