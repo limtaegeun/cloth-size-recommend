@@ -59,7 +59,7 @@ def map_get_error(rdd, user_rdd):
                         pelvis = 0
 
                     # error_model_basic = Row('size', 'shoulder', 'chest', 'waist', 'pelvis', 'hip', 'thigh')
-                    row_list.append(prepare.error_model_basic(row.name, row.size[size_index], shoulder, chest, waist, pelvis, hip, thigh))
+                    row_list.append(prepare.error_model_basic(row.name,row.gender, row.size[size_index], shoulder, chest, waist, pelvis, hip, thigh))
 
 
         return row_list
